@@ -4,7 +4,7 @@
 
 <div align="center">
   
-  <img src="./src/images/LOGO.png" alt="logo"  />
+  <img src="./src/images/LOGO.png" alt="logo" width="200" height="200" />
   <br/>
 
   <h3><b>TV Maze App</b></h3>
