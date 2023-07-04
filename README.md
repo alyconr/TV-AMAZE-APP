@@ -183,6 +183,10 @@ Webpack Css loader
 ```sh
      npm install --save-dev style-loader css-loader
 ```
+Webpack html loader
+```sh
+     npm install --save-dev html-loader
+```
 
 Webpack html plugin
 ```sh
@@ -197,7 +201,15 @@ Babel Dependency loader
 ```sh
      npm install --save-dev babel-loader
 ```
+Minify CSS: To reduce the size of your CSS file by removing unnecessary characters such as whitespace and comments. 
+```sh
+     npm install --save-dev css-minimizer-webpack-plugin
+```
 
+Split CSS: If your CSS file is large, splitting it into smaller modular files can help improve the loading time. 
+```sh
+     npm install mini-css-extract-plugin --save-dev
+```
 Babel core
 ```sh
      npm install --save-dev @babel/core @babel/preset-env
