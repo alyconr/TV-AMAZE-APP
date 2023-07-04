@@ -11,14 +11,22 @@
     "url": "git+https://github.com/alyconr/TV-AMAZE-APP.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Jeysson Contreras",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/alyconr/TV-AMAZE-APP/issues"
   },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
   "homepage": "https://github.com/alyconr/TV-AMAZE-APP#readme",
   "devDependencies": {
+    "@babel/core": "^7.22.5",
+    "@babel/preset-env": "^7.22.5",
     "babel-eslint": "^10.1.0",
+    "babel-loader": "^9.1.2",
     "css-loader": "^6.8.1",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
