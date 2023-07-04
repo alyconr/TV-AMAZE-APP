@@ -193,7 +193,15 @@ Webpack dev server
 ```sh
      npm install --save-dev webpack-dev-server
 ```
+Babel Dependency loader
+```sh
+     npm install --save-dev babel-loader
+```
 
+Babel core
+```sh
+     npm install --save-dev @babel/core @babel/preset-env
+```
 
 
 ### Usage
