@@ -1,8 +1,53 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: black;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  padding: 0;
+  margin: 0;
+}
+
 h1 {
   color: red;
   background-color: rgb(72, 0, 255);
   text-align: center;
-  font-size: 40px;
+  font-size: 30px;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.hover-action:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+  transition: 0.5s;
+  background-color: rgb(66, 91, 216);
+  color: #fff;
+}
+
+.hover-action:hover .numLikes {
+  color: #fff;
+}
+
+.heart {
+  width: 30px;
+  height: 30px;
+}
+
+.heart-border {
+  border: none;
+  background-color: transparent;
+}
+
+.heart-border:hover {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
 }
