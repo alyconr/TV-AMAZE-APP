@@ -18,9 +18,12 @@
     "comma-dangle": "off",
     "no-console": "off",
     "arrow-body-style": "off",
+    "no-plusplus": "off",
+    "radix": "off",
+    "max-len": "off",
     "no-async-promise-executor": "off",
     "import/prefer-default-export": "off",
-    "no-use-before-define": ["error", { "functions": false, "classes": false }],
+    "no-use-before-define": ["error", { "functions": false, "classes": false, "variables": false }],
     "linebreak-style": 0,
     "object-shorthand": 0,
     "import/extensions": [ 1, {
