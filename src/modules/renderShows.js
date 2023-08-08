@@ -1,55 +1,60 @@
-import { getShows } from "./getShows";
+import { getShows } from './getShows.js';
+import { handleLikes } from './likesHandler.js';
+import { getLikes } from './getLikes.js';
+import { showCards } from './templates.js';
 
-export const renderShows = async () => {
+export const countShows = async (getShows) => {
+  const numShowsSpan = document.getElementById('numShows');
+  if (numShowsSpan) {
+    numShowsSpan.textContent = `(${getShows.length})`;
+  }
+};
+export const renderShows = async (
+  filterActionMovies = false,
+  genreFilter = '',
+  customShows = []
+) => {
   try {
-    const shows = await getShows();
-    const container = document.getElementById("shows-container");
-    const pagination = document.querySelector(".pagination");
+    let shows;
+    if (customShows.length > 0) {
+      shows = customShows;
+    } else {
+      shows = await getShows();
+      countShows(shows);
+    }
+    const container = document.getElementById('shows-container');
+    const pagination = document.querySelector('.pagination');
 
-    const cardsPerPage = 4;
+    const likes = await getLikes();
+
+    const clickedCards = JSON.parse(localStorage.getItem('clickedCards')) || [];
+
+    const cardsPerPage = 16;
     let currentPage = 1;
     let startIndex = (currentPage - 1) * cardsPerPage;
     let endIndex = startIndex + cardsPerPage;
 
-    const updatePagination = () => {
-      pagination.innerHTML = "";
-      const totalPages = Math.ceil(shows.length / cardsPerPage);
+    const updatePagination = (filteredShows) => {
+      pagination.innerHTML = '';
+
+      // Determine the total number of pages based on the filtered shows
+      const totalPages = Math.ceil(filteredShows.length / cardsPerPage);
       const maxDisplayPages = 5; // Maximum number of pagination links to display
+      let startPage; let
+        endPage;
 
-      const createPaginationItem = (content, isActive = false) => {
-        const pageItem = document.createElement("li");
-        pageItem.classList.add("page-item");
-        if (isActive) {
-          pageItem.classList.add("active");
-        }
-        const pageLink = document.createElement("a");
-        pageLink.classList.add("page-link");
-        pageLink.href = "#";
-        pageLink.innerText = content;
-        pageItem.appendChild(pageLink);
-        return pageItem;
-      };
-
-      if (currentPage > 1) {
-        const previousPageItem = createPaginationItem("Previous");
-        pagination.appendChild(previousPageItem);
-      }
-
-      let startPage, endPage;
       if (totalPages <= maxDisplayPages) {
         startPage = 1;
         endPage = totalPages;
+      } else if (currentPage <= 2) {
+        startPage = 1;
+        endPage = maxDisplayPages;
+      } else if (currentPage >= totalPages - 1) {
+        startPage = totalPages - maxDisplayPages + 1;
+        endPage = totalPages;
       } else {
-        if (currentPage <= 2) {
-          startPage = 1;
-          endPage = maxDisplayPages;
-        } else if (currentPage >= totalPages - 1) {
-          startPage = totalPages - maxDisplayPages + 1;
-          endPage = totalPages;
-        } else {
-          startPage = currentPage - 2;
-          endPage = currentPage + 2;
-        }
+        startPage = currentPage - 2;
+        endPage = currentPage + 2;
       }
 
       for (let i = startPage; i <= endPage; i++) {
@@ -58,79 +63,128 @@ export const renderShows = async () => {
       }
 
       if (currentPage < totalPages) {
-        const nextPageItem = createPaginationItem("Next");
+        const nextPageItem = createPaginationItem('Next');
         pagination.appendChild(nextPageItem);
       }
     };
 
-    const renderCards = () => {
-      container.innerHTML = "";
+    const renderCards = (filteredShows) => {
+      container.innerHTML = '';
 
-      const currentShows = shows.slice(startIndex, endIndex);
+      // Get the current shows to display based on the current page and filtered shows
+      const currentShows = filteredShows.slice(startIndex, endIndex);
 
       currentShows.forEach((show) => {
-        const card = document.createElement("div");
-        card.classList.add("col");
-        card.innerHTML = `
-          <div class="card h-100 hover-action">
-            <img src="${show.image.medium}" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title fs-3 fw-bold">${show.name}</h5>
-              <div class="genres row row-cols-sm-3 ms-1 gap-1">
-                ${show.genres
-                  .map(
-                    (genre) =>
-                      `<span class="bg-primary rounded px-1 text-light text-center py-1">${genre}</span>`
-                  )
-                  .join("")}
-              </div>
-            </div>
-            <div class="card-footer">
-              <div class="d-flex flex-direction-row justify-content-between">
-                <button type="button" class="btn btn-danger">Comments</button>
-                <div>
-                  <button class="btn btn-light d-flex gap-1 heart-border">
-                    <span class="numLikes">45</span>
-                    <img class="heart" src="assets/images/heartnobg.png" alt="">
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
+        const card = document.createElement('div');
+        card.classList.add(
+          'col',
+          'col-sm-6',
+          'col-md-4',
+          'col-lg-3',
+          'gx-4',
+          'gy-4'
+        );
+        card.dataset.showId = show.id;
+        card.innerHTML = showCards(show);
+        const heartImg = card.querySelector('.heartbg');
+
+        clickedCards.forEach((cardId) => {
+          if (cardId.includes(show.id)) {
+            const img = document.createElement('img');
+            img.src = 'assets/images/heartbg.png';
+            img.style.width = '30px';
+            img.style.height = '30px';
+            img.style.marginTop = '-6px';
+            img.style.marginLeft = '-12px';
+            heartImg.appendChild(img);
+          }
+        });
 
         container.appendChild(card);
       });
 
-      updatePagination();
+      updatePagination(filteredShows);
     };
 
-    const handlePageClick = (event) => {
+    const updateLikesCount = () => {
+      const likesSpans = document.getElementsByClassName('numLikes');
+      Array.from(likesSpans).forEach((span) => {
+        const showId = span.id.split('_')[1];
+        const showLikes = likes.find((like) => like.item_id === showId);
+        if (showLikes) {
+          span.textContent = showLikes.likes;
+        }
+      });
+    };
+
+    const handlePageClick = (event, filteredShows) => {
       event.preventDefault();
       const targetPage = event.target.innerText;
 
-      if (targetPage === "Previous" && currentPage > 1) {
+      if (targetPage === 'Previous' && currentPage > 1) {
         currentPage--;
-      } else if (targetPage === "Next" && endIndex < shows.length) {
+      } else if (targetPage === 'Next' && endIndex < shows.length) {
         currentPage++;
-      } else if (!isNaN(parseInt(targetPage))) {
+      } else if (!Number.isNaN(parseInt(targetPage))) {
         currentPage = parseInt(targetPage);
       }
 
       startIndex = (currentPage - 1) * cardsPerPage;
       endIndex = startIndex + cardsPerPage;
 
-      renderCards();
+      renderCards(filteredShows);
+      updateLikesCount(); // Update the likes count after rendering the cards
     };
 
-    pagination.addEventListener("click", handlePageClick);
+    const createPaginationItem = (content, isActive = false) => {
+      const pageItem = document.createElement('li');
+      pageItem.classList.add('page-item');
+      if (isActive) {
+        pageItem.classList.add('active');
+      }
+      const pageLink = document.createElement('a');
+      pageLink.classList.add('page-link');
+      pageLink.href = '#';
+      pageLink.innerText = content;
+      pageItem.appendChild(pageLink);
+      return pageItem;
+    };
 
-    renderCards();
+    if (filterActionMovies) {
+      // Fetch shows and filter action movies only when filterActionMovies is true
+      const filteredActionMovies = shows.filter((show) => show.genres.includes('Action'));
+      pagination.removeEventListener('click', handlePageClick); // Remove previous event listener
+      pagination.addEventListener('click', (event) => handlePageClick(event, filteredActionMovies));
+      renderCards(filteredActionMovies);
+      countShows(filteredActionMovies);
+    } else if (genreFilter === 'Comedy') {
+      // Fetch shows and filter by 'Comedy' genre when genreFilter is 'Comedy'
+      const filteredComedyShows = shows.filter((show) => show.genres.includes('Comedy'));
+      pagination.removeEventListener('click', handlePageClick); // Remove previous event listener
+      pagination.addEventListener('click', (event) => handlePageClick(event, filteredComedyShows));
+      renderCards(filteredComedyShows);
+      countShows(filteredComedyShows);
+    } else if (genreFilter === 'Crime') {
+      // Fetch shows and filter by 'Crime' genre when genreFilter is 'Crime'
+      const filteredCrimeShows = shows.filter((show) => show.genres.includes('Crime'));
+      pagination.removeEventListener('click', handlePageClick); // Remove previous event listener
+      pagination.addEventListener('click', (event) => handlePageClick(event, filteredCrimeShows));
+      renderCards(filteredCrimeShows);
+      countShows(filteredCrimeShows);
+    } else {
+      // Initially render all TV shows
+      pagination.removeEventListener('click', handlePageClick); // Remove previous event listener
+      pagination.addEventListener('click', (event) => handlePageClick(event, shows));
+      renderCards(shows);
+    }
+
+    updateLikesCount(); // Update the likes count initially
   } catch (error) {
-    console.error("Error occurred while rendering shows:", error);
+    console.error('Error occurred while rendering shows:', error);
   }
 };
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
   renderShows();
+  handleLikes();
 });
