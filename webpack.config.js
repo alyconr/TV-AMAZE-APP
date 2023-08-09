@@ -2,11 +2,12 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
-module.exports = {
-  mode: 'development',
+const config = {
   entry: {
-    index: ['./src/index.js', './src/assets/css/style.css'],
+    index: './src/index.js',
+    style: './src/assets/css/style.css',
   },
   devtool: 'inline-source-map',
   devServer: {
@@ -33,7 +34,7 @@ module.exports = {
       {
         test: /\.(js)$/,
         exclude: /node_modules/,
-        use: ['babel-loader']
+        use: ['babel-loader'],
       },
       {
         test: /\.css$/i,
@@ -64,10 +65,16 @@ module.exports = {
     ],
   },
   optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
     runtimeChunk: 'single',
     minimize: true,
     minimizer: [
       new CssMinimizerPlugin(),
-    ]
+      new TerserPlugin(),
+    ],
   },
 };
+
+module.exports = config;
