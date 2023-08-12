@@ -40,7 +40,8 @@
 
 # 📖 [TV AMAZE APP ] <a name="about-project"></a>
 
-  **[TV Amaze App]**  TV Amaze App is a powerful web application that leverages REST methods to provide users with an immersive experience in exploring and interacting with a vast collection of TV series. By incorporating likes, comments, and reservation functionalities, this app allows users to engage with their favorite shows and effectively manage their viewing schedule. Powered by ES6 modules, Webpack, and the utilization of async/await and Promises, TV Maze App delivers a seamless and efficient user experience.
+  **[TV Amaze App]**  TV Amaze App is a SPA app that leverages REST methods to provide users with an immersive experience in exploring and interacting with a vast collection of TV series. By incorporating likes, comments, and reservation functionalities, this app allows users to engage with their favorite shows and effectively manage their viewing schedule. Powered by ES6 modules, Webpack, babel and the utilization of async/await and Promises, TV Maze App delivers a seamless and efficient user experience. The app was built using plain javascript to hightlight the skills to construct SPA apps without frameworks.
+  Moreover I used docker, docker compose and bash script to automate the deployment process in wherever the app is running. Just run the script to deploy the app in wherever cloud provider you are using and enjoy the app.
  
 
 ## 🛠 Built With <a name="built-with"></a>
