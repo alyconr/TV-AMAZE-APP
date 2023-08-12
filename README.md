@@ -46,7 +46,7 @@
 
 ## 🛠 Built With <a name="built-with"></a>
 <p> This project was built using:
-    HTML, CSS and JAVASCRIPT, ES6 Modules, REST API, ASYNC/await, Promises, WEBPACK
+    HTML, CSS and JAVASCRIPT, ES6 Modules, REST API, ASYNC/await, Promises, WEBPACK, babel, docker, docker compose and bash script.
 </p>
 
 ### Tech Stack <a name="tech-stack"></a>
@@ -55,64 +55,40 @@
 <li> CSS </li>
 <li> Javascript </li>
 <li> Webpack </li>
+<li> ES6 Modules </li>
+<li> REST API </li>
+<li> Async/await </li>
+<li> Promises </li>
+<li> Babel </li>
 <li> Git </li>
-<li> Github </li>
-<li> Netlify</li>
-
-
-
-<details>
-  <summary>Client</summary>
-  <ul>
-    <li><a href="https://www.w3schools.com/html/">HTML</a></li>
-  </ul>
-</details>
-
-<details>
-  <summary>Styles</summary>
-  <ul>
-    <li><a href="https://www.w3.org/Style/CSS/Overview.en.html">CSS</a></li>
-  </ul>
-</details>
-
-<details>
-  <summary>Language</summary>
-  <ul>
-    <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">CSS</a></li>
-  </ul>
-</details>
-
-<details>
-<summary>Database</summary>
-  <ul>
-    <li><a href="https://github.com/">GIT</a></li>
-  </ul>
-</details>
-
+<li> Github actions </li>
+<li> Docker </li>
+<li> Docker Compose </li>
+<li> Bash Script </li>
 <!-- Features -->
 
 ### Key Features <a name="key-features"></a>
 
 - **[HTML & CSS Best practices]**
+- **[Responsive Design]**
 - **[REST API]**
 - **[USER LIKES]**
 - **[USER COMMENTS]**
 - **[USER RESERVATIONS]**
 - **[ES6 Modules]**
 - **[Webpack Bundling ]**
+- **[Docker and Docker Compose]**
+- **[Bash Script to automate deployment]**
 - **[CI and CD Deployment with Netlify]**
 
 ### Series List:
- TV Amaze App fetches data from the TV Maze API and displays an extensive list of TV series to users. The app employs REST methods to efficiently retrieve and present series information, including title, genre, summary, and rating. The well-organized series list provides users with a seamless browsing experience.
+ TV Amaze App fetches data from the TV Maze API and displays an extensive list of TV series to users. The app employs REST methods to efficiently retrieve and present series information, including title, genre, summary, and rating. The well-organized series list provides users with a seamless browsing experience. Render different series by genre and   search series by title.
 
 ### Likes:
  Users can express their preferences and indicate their favorite series by utilizing the "Like" feature. This functionality is achieved through REST methods, enabling users to interact with the app and curate their personal collection of liked shows. By utilizing async/await and Promises, the app ensures smooth and responsive liking functionality.
 
 ### Comments Popup: 
  TV Amaze App enables users to engage in discussions and share their thoughts on specific TV series by leaving comments. Leveraging REST methods, users can interact with the app to post comments, fostering a community-driven environment. The implementation of ES6 modules and async/await allows for seamless handling of comment-related operations in a popup window.
-
-### Reservations Popup:
- Users can effectively manage their TV viewing schedule by reserving series for specified periods. By leveraging REST methods, users can reserve a series for a specific timeframe, ensuring they do not miss their planned watch sessions. The app employs async/await and Promises to handle reservation operations smoothly and efficiently, this features is load in a popup window.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -138,6 +114,10 @@ To get a local copy up and running, follow these steps.
 To run this project  you need the following tools:
 - [VS Code ]
 - [Git and GitHub ]
+- [Nodejs ]
+- [docker and docker compose ]
+- [Bash Script ]
+- [openssl to generate self signed certificates ]
 - [Webpack Installation ]
 - [CI CD Netlify Bot  Instalation]
 - [Nodejs ]
@@ -206,6 +186,10 @@ Minify CSS: To reduce the size of your CSS file by removing unnecessary characte
 ```sh
      npm install --save-dev css-minimizer-webpack-plugin
 ```
+Split Js : If your JS file is large, splitting it into smaller modular files can help improve the loading time. 
+```sh
+     npm install --save-dev terser-webpack-plugin
+```
 
 Split CSS: If your CSS file is large, splitting it into smaller modular files can help improve the loading time. 
 ```sh
@@ -220,10 +204,13 @@ Babel core
 ### Usage
 
 To run locally run the following command:
-
+## Development mode
 ```sh
-    npm run build
-    npm run start
+    npm run build-dev    
+```
+## Production mode
+```sh
+    npm run build-prod
 ```
 
 
@@ -248,8 +235,37 @@ To test the ESLint linter:
 
 ### Deployment
 
-You can deploy this project using your local enviroment or use Netlify bot to deploy it online.
+## Local deployment using Docker:
 
+In nginx folder run the following command:
+```sh
+    docker  build -t TV-Maze-App .
+```
+Then run the following command:
+
+```sh
+    docker -it --name tvapp  run -p 443:443 -p 80:80 -v "$(pwd)":/usr/share/nginx/html -d TV-Maze-App
+```
+Be sure to replace the path of your local working directory folder with the path of the folder where the nginx working directory is located. 
+
+## Local deployment using Docker-compose:
+In root folder run the following command:
+```sh
+    docker compose up -d
+```
+The above command will deploy the app in localhost on port 443 and 80 through dockerized nginx webserver.
+
+### Cloud Production deployment:
+In root folder run the following command:
+```sh
+    bash deploy.sh -u username -i ipaddress -d Namefolder -e env
+```
+The arguments are:
+- -u username
+- -i ipaddress
+- -d Namefolder
+- -e env (prod or dev) respectively
+With the last script, the app will be deployed to any cloud provider you want to use,  you only need the IP address and the right permission to access it.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
