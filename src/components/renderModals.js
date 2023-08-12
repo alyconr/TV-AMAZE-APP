@@ -1,11 +1,11 @@
-import { getShowsDetails } from "../api/getShowsDetails.js";
-import { showModal, showComments } from "../utils/templates.js";
-import { postComments } from "../api/postcomments.js";
-import { getComments } from "../api/getComments.js";
+import { getShowsDetails } from '../api/getShowsDetails.js';
+import { showModal, showComments } from '../utils/templates.js';
+import { postComments } from '../api/postcomments.js';
+import { getComments } from '../api/getComments.js';
 
 // Function to count the comments and update the span
 const countComments = (container, commentsData) => {
-  const numCommentsSpan = container.querySelector(".numComments");
+  const numCommentsSpan = container.querySelector('.numComments');
   if (numCommentsSpan) {
     numCommentsSpan.textContent = `(${commentsData.length})`;
   }
@@ -13,54 +13,54 @@ const countComments = (container, commentsData) => {
 
 export const showModals = async () => {
   try {
-    const container = document.getElementById("shows-container");
-    const modalContainer = document.getElementById("modal-container");
-    const overlay = document.querySelector(".overlay");
+    const container = document.getElementById('shows-container');
+    const modalContainer = document.getElementById('modal-container');
+    const overlay = document.querySelector('.overlay');
 
-    container.addEventListener("click", async (event) => {
+    container.addEventListener('click', async (event) => {
       event.preventDefault();
       const button = event.target;
-      if (button.classList.contains("btn-modal")) {
+      if (button.classList.contains('btn-modal')) {
         const { showId } = button.dataset; // Get the show id
         const shows = await getShowsDetails(showId);
         const commentsData = await getComments(showId);
 
-        overlay.classList.add("active");
+        overlay.classList.add('active');
 
-        modalContainer.innerHTML = "";
+        modalContainer.innerHTML = '';
 
         Array.from(shows).forEach((show) => {
-          const popup = document.createElement("div");
-          popup.classList.add("card", "card-modal", "mb-3", "my-5", "mx-auto");
+          const popup = document.createElement('div');
+          popup.classList.add('card', 'card-modal', 'mb-3', 'my-5', 'mx-auto');
           popup.dataset.showId = show.id;
-          popup.style.maxWidth = "540px";
+          popup.style.maxWidth = '540px';
           popup.innerHTML = showModal(show);
 
           // Add event listener to close button
-          const closeButton = popup.querySelector(".close-modal");
-          closeButton.addEventListener("click", () => {
+          const closeButton = popup.querySelector('.close-modal');
+          closeButton.addEventListener('click', () => {
             modalContainer.removeChild(popup);
-            overlay.classList.remove("active");
+            overlay.classList.remove('active');
           });
 
           modalContainer.appendChild(popup);
 
           // Get the updated comments for the current showId
           const getCommentsContainer = popup.querySelector(
-            "#comments-container"
+            '#comments-container'
           );
 
           if (commentsData && commentsData.length > 0) {
             commentsData.forEach((comment) => {
-              const innerComment = document.createElement("div");
+              const innerComment = document.createElement('div');
               innerComment.classList.add(
-                "item",
-                "d-flex",
-                "justify-content-between",
-                "align-items-center",
-                "my-2",
-                "px-2",
-                "mx-auto"
+                'item',
+                'd-flex',
+                'justify-content-between',
+                'align-items-center',
+                'my-2',
+                'px-2',
+                'mx-auto'
               );
 
               innerComment.innerHTML += showComments(comment);
@@ -71,40 +71,38 @@ export const showModals = async () => {
             // Call the countComments function to update the comment count
             countComments(popup, commentsData);
           } else {
-            const commentsMessage = document.createElement("p");
+            const commentsMessage = document.createElement('p');
             commentsMessage.classList.add(
-              "comments-message",
-              "text-center",
-              "text-light",
-              "w-100"
+              'comments-message',
+              'text-center',
+              'text-light',
+              'w-100'
             );
-            commentsMessage.textContent =
-              "No comments yet, Be the first to add a comment!";
+            commentsMessage.textContent = 'No comments yet, Be the first to add a comment!';
             getCommentsContainer.appendChild(commentsMessage);
           }
 
-          const userInputComment =
-            document.getElementById("user-input-comment");
+          const userInputComment = document.getElementById('user-input-comment');
 
-          userInputComment.addEventListener("submit", async (event) => {
+          userInputComment.addEventListener('submit', async (event) => {
             event.preventDefault();
-            const userName = document.getElementById("userName").value;
-            const comment = document.getElementById("comments").value;
+            const userName = document.getElementById('userName').value;
+            const comment = document.getElementById('comments').value;
 
             if (showId) {
               try {
                 await postComments(showId, userName, comment);
 
-                const innerComment = document.createElement("div");
+                const innerComment = document.createElement('div');
                 innerComment.classList.add(
-                  "item",
-                  "d-flex",
-                  "justify-content-between",
-                  "align-items-center",
-                  "my-2",
-                  "px-2",
-                  "mx-auto",
-                  "w-75"
+                  'item',
+                  'd-flex',
+                  'justify-content-between',
+                  'align-items-center',
+                  'my-2',
+                  'px-2',
+                  'mx-auto',
+                  'w-75'
                 );
                 const date = new Date();
                 const formatDate = date.toLocaleDateString();
@@ -119,10 +117,9 @@ export const showModals = async () => {
 
                 getCommentsContainer.appendChild(innerComment);
 
-                document.getElementById("userName").value = "";
-                document.getElementById("comments").value = "";
-                const createdMessage =
-                  document.querySelector(".comments-message");
+                document.getElementById('userName').value = '';
+                document.getElementById('comments').value = '';
+                const createdMessage = document.querySelector('.comments-message');
 
                 if (createdMessage) {
                   createdMessage.remove();
@@ -135,17 +132,17 @@ export const showModals = async () => {
                 console.log(error);
               }
             } else {
-              console.log("Comments not created");
+              console.log('Comments not created');
             }
           });
         });
       }
     });
   } catch (error) {
-    console.log("Error occurred in showModals", error);
+    console.log('Error occurred in showModals', error);
   }
 };
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
   showModals();
 });

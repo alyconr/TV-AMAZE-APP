@@ -1,56 +1,69 @@
-import { renderShows } from "./renderShows.js";
-import { handleRoute } from "../routes/router.js";
+import { renderShows } from './renderShows.js';
+import { handleRoute } from '../routes/router.js';
 
 export const renderActionMovies = () => {
   try {
-    const actionsLink = document.getElementById("showActionLink");
-    const homeLink = document.getElementById("homeLink");
-    const logoLink = document.getElementById("tvAmazeLogo");
-    const comedyLink = document.getElementById("comedyLink");
-    const crimeLink = document.getElementById("crimeLink");
+    const actionsLink = document.getElementById('showActionLink');
+    const homeLink = document.getElementById('homeLink');
+    const logoLink = document.getElementById('tvAmazeLogo');
+    const comedyLink = document.getElementById('comedyLink');
+    const crimeLink = document.getElementById('crimeLink');
+    const navbarToggle = document.querySelector('.navbar-toggler');
+    const navbarCollapse = document.getElementById('navbarNavAltMarkup');
 
     // Call handleRoute initially to set up the correct content based on the URL path
     handleRoute();
 
-    actionsLink.addEventListener("click", (event) => {
+    const closeNavBar = () => {
+      if (navbarCollapse.classList.contains('show')) {
+        navbarToggle.click();
+      }
+    };
+
+    actionsLink.addEventListener('click', (event) => {
       event.preventDefault();
-      window.history.pushState(null, null, "action");
+      window.history.pushState(null, null, 'action');
       renderShows(true); // Render action movies
       handleRoute(); // Handle the route change
+      closeNavBar();
     });
 
-    homeLink.addEventListener("click", (event) => {
+    homeLink.addEventListener('click', (event) => {
       event.preventDefault();
-      window.history.pushState(null, null, "/home");
+      window.history.pushState(null, null, '/home');
       renderShows(); // Render all shows (home page)
       handleRoute(); // Handle the route change
+      closeNavBar();
     });
 
-    logoLink.addEventListener("click", (event) => {
+    logoLink.addEventListener('click', (event) => {
       event.preventDefault();
-      window.history.pushState(null, null, "/#");
+      window.history.pushState(null, null, '/#');
       renderShows(); // Render all shows (home page)
       handleRoute(); // Handle the route change
+      closeNavBar();
     });
 
-    comedyLink.addEventListener("click", (event) => {
+    comedyLink.addEventListener('click', (event) => {
       event.preventDefault();
-      window.history.pushState(null, null, "comedy");
-      renderShows(false, "Comedy"); // Render comedy shows
+      window.history.pushState(null, null, 'comedy');
+      renderShows(false, 'Comedy'); // Render comedy shows
       handleRoute(); // Handle the route change
+      closeNavBar();
     });
 
-    crimeLink.addEventListener("click", (event) => {
+    crimeLink.addEventListener('click', (event) => {
       event.preventDefault();
-      window.history.pushState(null, null, "crime");
-      renderShows(false, "Crime"); // Render crime shows
+      window.history.pushState(null, null, 'crime');
+      renderShows(false, 'Crime'); // Render crime shows
       handleRoute(); // Handle the route change
+      closeNavBar();
     });
   } catch (error) {
     console.log(error);
   }
 };
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
   renderActionMovies();
 });

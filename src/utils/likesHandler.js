@@ -1,5 +1,5 @@
 import { postLikes } from '../api/postLikes.js';
-import { getLikes } from '../api/getLikes.js'; 
+import { getLikes } from '../api/getLikes.js';
 
 export const handleLikes = async () => {
   const container = document.getElementById('shows-container');
