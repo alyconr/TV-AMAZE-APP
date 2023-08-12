@@ -8,7 +8,7 @@
     "clean": "rm -rf dist/*",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --watch",
-    "start": "webpack serve --open",
+    "start": "webpack serve --open --mode=development",
     "build-dev": "webpack --mode=development",
     "build-prod": "webpack --mode=production"
   },
