@@ -1,41 +1,50 @@
 import { renderShows } from './renderShows.js';
+import { handleRoute } from './router.js';
 
 export const renderActionMovies = () => {
   try {
     const actionsLink = document.getElementById('showActionLink');
+    const homeLink = document.getElementById('homeLink');
+    const logoLink = document.getElementById('tvAmazeLogo');
+    const comedyLink = document.getElementById('comedyLink');
+    const crimeLink = document.getElementById('crimeLink');
+
+    // Call handleRoute initially to set up the correct content based on the URL path
+    handleRoute();
 
     actionsLink.addEventListener('click', (event) => {
       event.preventDefault();
-      renderShows(true); // Pass true as an argument to indicate filtering action movies
+      window.history.pushState(null, null, 'action');
+      renderShows(true); // Render action movies
+      handleRoute(); // Handle the route change
     });
-
-    const homeLink = document.getElementById('homeLink');
 
     homeLink.addEventListener('click', (event) => {
       event.preventDefault();
-      renderShows();
+      window.history.pushState(null, null, '/home');
+      renderShows(); // Render all shows (home page)
+      handleRoute(); // Handle the route change
     });
-
-    const logoLink = document.getElementById('tvAmazeLogo');
 
     logoLink.addEventListener('click', (event) => {
       event.preventDefault();
-      renderShows();
+      window.history.pushState(null, null, '/#');
+      renderShows(); // Render all shows (home page)
+      handleRoute(); // Handle the route change
     });
-
-    const comedyLink = document.getElementById('comedyLink');
 
     comedyLink.addEventListener('click', (event) => {
       event.preventDefault();
-      renderShows(false, 'Comedy');
-      // Call renderShows() with filterActionMovies=false and genre='Comedy'
+      window.history.pushState(null, null, 'comedy');
+      renderShows(false, 'Comedy'); // Render comedy shows
+      handleRoute(); // Handle the route change
     });
-
-    const crimeLink = document.getElementById('crimeLink');
 
     crimeLink.addEventListener('click', (event) => {
       event.preventDefault();
-      renderShows(false, 'Crime');
+      window.history.pushState(null, null, 'crime');
+      renderShows(false, 'Crime'); // Render crime shows
+      handleRoute(); // Handle the route change
     });
   } catch (error) {
     console.log(error);

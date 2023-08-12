@@ -18,10 +18,20 @@ export const searchMovies = () => {
 
           // Clear the search
           searchBar.value = '';
+
+          // Update the URL with the search query
+          window.history.pushState(
+            null,
+            null,
+            `search?query=${encodeURIComponent(searchValue)}`
+          );
         });
       } else {
         // If the search bar is empty, render all TV shows (home page)
         renderShows();
+
+        // Clear the URL query
+        window.history.pushState(null, null, '/');
       }
     });
   } catch (error) {

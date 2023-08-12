@@ -40,8 +40,8 @@ export const renderShows = async (
       // Determine the total number of pages based on the filtered shows
       const totalPages = Math.ceil(filteredShows.length / cardsPerPage);
       const maxDisplayPages = 5; // Maximum number of pagination links to display
-      let startPage; let
-        endPage;
+      let startPage;
+      let endPage;
 
       if (totalPages <= maxDisplayPages) {
         startPage = 1;

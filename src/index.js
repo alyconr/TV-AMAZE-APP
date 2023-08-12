@@ -7,8 +7,13 @@ import './assets/images/cancelmodal.svg';
 import { showModals } from './modules/renderModals.js';
 import { renderActionMovies } from './modules/renderAction.js';
 import { searchMovies } from './modules/searchMovies.js';
+import { handleRoute } from './modules/router.js';
 
 renderShows();
 showModals();
 renderActionMovies();
 searchMovies();
+
+document.addEventListener('DOMContentLoaded', () => {
+  handleRoute();
+});
