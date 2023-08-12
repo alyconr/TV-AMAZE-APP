@@ -1,4 +1,4 @@
-FROM nginx:alpine
+FROM nginx:latest
 
 LABEL Jeysson Contreras "alyconr@hotmail.com"
 
