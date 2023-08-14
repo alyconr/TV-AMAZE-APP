@@ -1,4 +1,3 @@
-import { renderShows } from './renderShows.js';
 import { handleRoute } from '../routes/router.js';
 
 export const renderActionMovies = () => {
@@ -23,7 +22,6 @@ export const renderActionMovies = () => {
     actionsLink.addEventListener('click', (event) => {
       event.preventDefault();
       window.history.pushState(null, null, 'action');
-      renderShows(true); // Render action movies
       handleRoute(); // Handle the route change
       closeNavBar();
     });
@@ -31,7 +29,6 @@ export const renderActionMovies = () => {
     homeLink.addEventListener('click', (event) => {
       event.preventDefault();
       window.history.pushState(null, null, '/home');
-      renderShows(); // Render all shows (home page)
       handleRoute(); // Handle the route change
       closeNavBar();
     });
@@ -39,7 +36,6 @@ export const renderActionMovies = () => {
     logoLink.addEventListener('click', (event) => {
       event.preventDefault();
       window.history.pushState(null, null, '/#');
-      renderShows(); // Render all shows (home page)
       handleRoute(); // Handle the route change
       closeNavBar();
     });
@@ -47,7 +43,6 @@ export const renderActionMovies = () => {
     comedyLink.addEventListener('click', (event) => {
       event.preventDefault();
       window.history.pushState(null, null, 'comedy');
-      renderShows(false, 'Comedy'); // Render comedy shows
       handleRoute(); // Handle the route change
       closeNavBar();
     });
@@ -55,7 +50,6 @@ export const renderActionMovies = () => {
     crimeLink.addEventListener('click', (event) => {
       event.preventDefault();
       window.history.pushState(null, null, 'crime');
-      renderShows(false, 'Crime'); // Render crime shows
       handleRoute(); // Handle the route change
       closeNavBar();
     });
@@ -63,7 +57,3 @@ export const renderActionMovies = () => {
     console.log(error);
   }
 };
-
-document.addEventListener('DOMContentLoaded', () => {
-  renderActionMovies();
-});

@@ -184,7 +184,4 @@ export const renderShows = async (
   }
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-  renderShows();
-  handleLikes();
-});
+handleLikes();
