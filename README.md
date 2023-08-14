@@ -40,14 +40,9 @@
 
 # 📖 [TV AMAZE APP ] <a name="about-project"></a>
 
-  **[TV Amaze App]**  TV Amaze App is a SPA app that leverages REST methods to provide users with an immersive experience in exploring and interacting with a vast collection of TV series. By incorporating likes, comments, and reservation functionalities, this app allows users to engage with their favorite shows and effectively manage their viewing schedule. Powered by ES6 modules, Webpack, babel and the utilization of async/await and Promises, TV Maze App delivers a seamless and efficient user experience. The app was built using plain javascript to hightlight the skills to construct SPA apps without frameworks.
+  **[TV Amaze App]**  TV Amaze App is a SPA app that leverages REST methods to provide users with an immersive experience in exploring and interacting with a vast collection of TV series. By incorporating likes, comments, and reservation functionalities, this app allows users to engage with their favorite shows and effectively manage their viewing schedule. Powered by ES6 modules, Webpack, babel and the utilization of async/await and Promises, TV Maze App delivers a seamless and efficient user experience. The app was built using plain javascript and express  to hightlight the skills to construct SPA apps without frameworks.
   Moreover I used docker, docker compose and bash script to automate the deployment process in wherever the app is running. Just run the script to deploy the app in wherever cloud provider you are using and enjoy the app.
  
-
-## 🛠 Built With <a name="built-with"></a>
-<p> This project was built using:
-    HTML, CSS and JAVASCRIPT, ES6 Modules, REST API, ASYNC/await, Promises, WEBPACK, babel, docker, docker compose and bash script.
-</p>
 
 ### Tech Stack <a name="tech-stack"></a>
 
@@ -55,6 +50,7 @@
 <li> CSS </li>
 <li> Javascript </li>
 <li> Webpack </li>
+<li> Express </li>
 <li> ES6 Modules </li>
 <li> REST API </li>
 <li> Async/await </li>
@@ -77,6 +73,7 @@
 - **[USER RESERVATIONS]**
 - **[ES6 Modules]**
 - **[Webpack Bundling ]**
+- **[Express Server to handle routing]**
 - **[Docker and Docker Compose]**
 - **[Bash Script to automate deployment]**
 - **[CI and CD Deployment with Netlify]**
@@ -115,6 +112,7 @@ To run this project  you need the following tools:
 - [VS Code ]
 - [Git and GitHub ]
 - [Nodejs ]
+- [Express ]
 - [docker and docker compose ]
 - [Bash Script ]
 - [openssl to generate self signed certificates ]
@@ -199,6 +197,15 @@ Babel core
 ```sh
      npm install --save-dev @babel/core @babel/preset-env
 ```
+Express and body-parser
+```sh
+     npm install --save express body-parser
+```
+
+Concurrent, the npm package for running multiple commands in parallel
+```sh
+     npm install --save-dev concurrently
+```
 
 
 ### Usage
@@ -206,11 +213,12 @@ Babel core
 To run locally run the following command:
 ## Development mode
 ```sh
-    npm run build-dev    
+    npm run build-dev
+    npm run devserver-reload    
 ```
 ## Production mode
 ```sh
-    npm run build-prod
+    npm run build-prod-server
 ```
 
 
