@@ -11,8 +11,8 @@ const config = {
   },
   devtool: 'inline-source-map',
   devServer: {
-    static: './dist',
-    hot: false,
+    static: './src',
+    hot: true,
     liveReload: true,
   },
   plugins: [
