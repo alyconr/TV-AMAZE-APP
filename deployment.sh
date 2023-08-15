@@ -43,7 +43,18 @@ fi
 
 
 #  Delete old versions
-if [ -d "$WORKING_DIR" ]; then rm -Rf $WORKING_DIR ./$WORKING_DIR.tar.gz && ssh $USER@$IP "rm -Rf ~/PROJECTS/ && mkdir ~/PROJECTS/ && chmod -R 777  ~/PROJECTS/ && echo "redhat" | sudo -S docker stop \$(docker ps -a -q) &&  docker rm \$(docker ps -a -q) "; fi
+if [ -d "$WORKING_DIR" ]; then rm -Rf $WORKING_DIR ./$WORKING_DIR.tar.gz && ssh $USER@$IP << EOF
+    rm -Rf ~/PROJECTS/
+    mkdir ~/PROJECTS/
+    chmod -R 777 ~/PROJECTS/
+    echo "redhat" | sudo -S docker stop \$(docker ps -a -q)
+    docker rm \$(docker ps -a -q)
+    kill -9 \$(lsof -t -i:5000)
+EOF
+fi
+
+
+
 
 
 # Build and bindle the app
@@ -58,6 +69,8 @@ mkdir $WORKING_DIR
 cp -r ./dist ./$WORKING_DIR
 cp -r ./nginx ./$WORKING_DIR
 cp -r ./docker-compose.yml ./$WORKING_DIR
+cp -r ./package.json ./$WORKING_DIR
+cp -r ./server.js ./$WORKING_DIR
 
 
 
@@ -74,17 +87,21 @@ scp -r ./$WORKING_DIR.tar.gz $USER@$IP:~/PROJECTS/
 if [ $? -eq 0 ]; then 
     echo "Deployment successful"
     if [ $? -eq 0 ]; then
-    ssh $USER@$IP "cd ~/PROJECTS/ && tar -xvzf $WORKING_DIR.tar.gz && cd $WORKING_DIR && echo "redhat" | sudo -S docker compose up -d "
+    ssh $USER@$IP << EOF
+    cd ~/PROJECTS/
+    tar -xvzf $WORKING_DIR.tar.gz
+    cd $WORKING_DIR
+    npm install
+    echo "redhat" | sudo -S docker compose up -d
+    npm run server-prod &
+EOF
+    fi     
      
-     if [ $? -eq 0 ]; then
-        echo "Docker Deployment successful"
-     else
-        echo "Deployment failed"
-     fi
-    fi
 else
     echo "Deployment failed"
 fi
+
+
 
 
 
