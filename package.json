@@ -11,10 +11,10 @@
     "start": "webpack serve --open --mode=development",
     "build-dev": "webpack --mode=development ",
     "build-prod": "webpack --mode=production",
-    "server-prod": "node server.js",
+    "server-prod": "node server.js & ",
     "server-dev": "nodemon server.js",
     "devserver-live": "concurrently \"npm run server-dev\" \"npm run start\" \"npm run build-dev\""
-    
+   
   },
   "repository": {
     "type": "git",
@@ -38,7 +38,7 @@
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.27.5",
-    "hint": "^7.1.10",
+    "hint": "^2.0.0",
     "html-loader": "^4.2.0",
     "html-webpack-plugin": "^5.5.3",
     "mini-css-extract-plugin": "^2.7.6",
@@ -56,8 +56,7 @@
   "dependencies": {
     "body-parser": "^1.20.2",
     "express": "^4.18.2",
-    "netlify-lambda": "^2.0.16",
-    "path": "^0.12.7",
-    "serverless-http": "^3.2.0"
+    "path": "^0.12.7"
+  
   }
 }
