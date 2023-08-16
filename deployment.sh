@@ -3,6 +3,9 @@ WORKING_DIR="WebpackBabelDockerDeploy"
 IP="localhost"
 USER="root"
 BULD_ENV="prod"
+DOCKERHUB_NAME_SPACE="810129"
+
+
 
 while getopts ":u:i:d:e:m" opt; do
       case $opt in
@@ -50,6 +53,7 @@ if [ -d "$WORKING_DIR" ]; then rm -Rf $WORKING_DIR ./$WORKING_DIR.tar.gz && ssh 
     echo "redhat" | sudo -S docker stop \$(docker ps -a -q)
     docker rm \$(docker ps -a -q)
     kill -9 \$(lsof -t -i:5000)
+    docker rmi $DOCKERHUB_NAME_SPACE/tvapp
 EOF
 fi
 
@@ -93,13 +97,17 @@ if [ $? -eq 0 ]; then
     cd $WORKING_DIR
     npm install
     echo "redhat" | sudo -S docker compose up -d
+    docker build -t $DOCKERHUB_NAME_SPACE/tvapp -f nginx/Dockerfile .
+    echo "redhat" | sudo docker push $DOCKERHUB_NAME_SPACE/tvapp
     npm run server-prod &
+    
+    
 EOF
     fi     
      
 else
     echo "Deployment failed"
-fi
+fi   
 
 
 
