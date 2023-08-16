@@ -59,6 +59,7 @@
 <li> Git </li>
 <li> Github actions </li>
 <li> Docker </li>
+<li> Docker Hub </li>
 <li> Docker Compose </li>
 <li> Bash Script </li>
 <!-- Features -->
@@ -114,6 +115,7 @@ To run this project  you need the following tools:
 - [Nodejs ]
 - [Express ]
 - [docker and docker compose ]
+- [Docker Hub ]
 - [Bash Script ]
 - [openssl to generate self signed certificates ]
 - [Webpack Installation ]
@@ -245,17 +247,23 @@ To test the ESLint linter:
 
 ## Local deployment using Docker:
 
-In nginx folder run the following command:
+In root project folder run the following command:
 ```sh
-    docker  build -t TV-Maze-App .
+    docker  build -t TV-Maze-App nginx/Dockerfile .
 ```
 Then run the following command:
 
 ```sh
-    docker -it --name tvapp  run -p 443:443 -p 80:80 -v "$(pwd)":/usr/share/nginx/html -d TV-Maze-App
-```
-Be sure to replace the path of your local working directory folder with the path of the folder where the nginx working directory is located. 
 
+    docker -it --name tvapp  run -p 443:443 -p 80:80 -v ./dist:/usr/share/nginx/html -d TV-Maze-App
+```
+Be sure to replace the path of your project dist folder 
+
+If you want to use docker hub image repository, run the following command:
+```sh
+    docker pull 810129/tvapp
+    docker -it --name tvapp  run -p 443:443 -p 80:80 -v ./dist:/usr/share/nginx/html -d 810129/tvapp
+```
 ## Local deployment using Docker-compose:
 In root folder run the following command:
 ```sh
