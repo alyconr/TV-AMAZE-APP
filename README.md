@@ -274,13 +274,13 @@ The above command will deploy the app in localhost on port 443 and 80 through do
 ### Cloud Production deployment:
 In root folder run the following command:
 ```sh
-    bash deploy.sh -u username -i ipaddress -d Namefolder -e env
+    bash deployment.sh -u username -i ipaddress -d Namefolder -e environment
 ```
 The arguments are:
 - -u username
 - -i ipaddress
 - -d Namefolder
-- -e env (prod or dev) respectively
+- -e environment (prod or dev) respectively
 With the last script, the app will be deployed to any cloud provider you want to use,  you only need the IP address and the right permission to access it.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
