@@ -220,7 +220,8 @@ To run locally run the following command:
 ```
 ## Production mode
 ```sh
-    npm run build-prod-server
+    npm run build-prod
+    npm run server-prod
 ```
 
 
